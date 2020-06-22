@@ -160,27 +160,7 @@ function contains(array,value){
 module.exports.contains = contains;
 
 
-/** each: Designed to take in a collection and a function. It does not have any returns, but will loop through the collection and call 
- * the function for each index/key in the collection, altering it in some way.
- * 
- * @param {Array or Object} collection : The array or collection of which to loop over and for the function to alter at each key/index
- * @param {Function} func: The function to be called at each index/key within the loop to alter the collection
- * 
- */
- 
-function each(collection, func){
 
-  if (Array.isArray(collection)){ 
-      for (var i = 0; i < collection.length; i++){ 
-          func(collection[i], i, collection); 
-      }
-  } else {
-      for (var key in collection){ 
-          func(collection[key], key, collection); 
-      }
-  }
-}
-module.exports.each = each;
 
 /** unique: Takes in an array and returns a new array with only unique elements from the original array
  * 
@@ -206,7 +186,7 @@ module.exports.unique = unique;
 /** filter: takes in an array and a function and returns the only items in the array that after passing through the function have passed as true
  * 
  * @param {Array} array : the original array containing all the values that will be passed through the function
- * @param {Function} func : the function that will take each array value and determine a true or false return for each
+ * @param {Function} func : the function that will take the value, index and array and determine a true or false return for each
  * 
  * @return {Array}: returns a new array of values from the original that passed through the function and evaluated as true
  * @edgecase: If function produces a result of false or anything other than true, it will not be added to the new array.
@@ -228,7 +208,7 @@ module.exports.filter = filter;
 /** reject: designed to do the same as filter, but return the values that receive the opposite result from the function (false values)
  * 
  * @param {Array} array: the array which values will each be passed into the function and be assessed for true or false
- * @param {Function} func: the function that will take each value and assess a true or false value from it
+ * @param {Function} func: the function that will take in a value, index and array and assess a true or false value from it
  * 
  * @return {Array} array: the array of values that assessed as false through the function. 
  */
@@ -245,7 +225,7 @@ module.exports.reject = reject;
  *  as true when passed through the function, and the second an array of values that assessed as false when passed through.
  * 
  * @param {Array} array: the original array with values to be passed through the function
- * @param {Function} func: the function that takes in each value from the array and tests them for true or false
+ * @param {Function} func: the function that takes in the value, index and array and test for true or false
  * 
  * @return {Array}: Will return an array containing two arrays, the first with values that passed through the function and 
  * assessed as true, the second with values that passed through the function and assessed as false.
@@ -313,14 +293,13 @@ module.exports.pluck = pluck;
 
 /** every: Designed to take in a collection and a function and returns a boolean value. Each element from the collection is passed 
  *  through the function and if it is assessed as true for each value, it returns true. If even one value evaluates in the function
- *  as false, every returns false.
+ *  as false, every returns false. If function is undefined and all the elements test as truthy, return true.
+ *  If function is undefined and even one element tests as falsey, return false.
  * 
  * @param {Array or Object} collection: The array or object with the values to be passed through the function.
  * @param {Function} func: the function that will take in the element from array or object and return true or false
  * 
  * @return {Boolean}: Will return true if all elements pass through function as true. False is even one element passes through as false.
- * @edgecase: If function is undefined and all the elements test as truthy, return true.
- * @edgecase: If function is undefined and even one element tests as falsey, return false.
  * 
  */
 
@@ -346,14 +325,13 @@ module.exports.every = every;
 
 /** some: Designed to take in a collection and a function and returns a boolean value. Each element from the collection is passed 
  *  through the function and if at least one element is assessed as true, it returns true. It will return false only if every
- *  value is assessed as false.
+ *  value is assessed as false. If function is undefined and all the elements test as falsey, return false.
+ *  If function is undefined and even one element tests as truthey, return true.
  * 
  * @param {Array or Object} collection: The array or object with the values to be passed through the function.
  * @param {Function} func: the function that will take in the element from array or object and return true or false
  * 
  * @return {Boolean}: Will return false if all elements pass through function as false. True is even one element passes through as True.
- * @edgecase: If function is undefined and all the elements test as falsey, return false.
- * @edgecase: If function is undefined and even one element tests as truthey, return true.
  * 
  */
 
@@ -379,13 +357,13 @@ module.exports.some = some;
 /** reduce: takes an array, a function and a seed. It passes each value in the array through the function and uses the seed
  *  as a starting value to build upon each iteration, depending what the function is. It will return the final value of the seed after
  *  all values are passed through the function and the seed has been altered by each iteration.
+ *  If no seed is given, the function will use the value of the zero index in the array and move on to the second index iteration.
  * 
  * @param {Array} array: The collection of values that will go through the function to build on the seed
  * @param {Function} func: The function that will take in the seed(total), element, and index and return a changed seed(total).
  * @param {Number} seed: The number that the function will use as a starting number in its parameter and will be built on each iteration
  * 
- * @return {Number}: Will return a number that is the value of the seed(total) after all values are passed through the function.
- * @edgecase: If no seed is given, the function will use the value of the zero index in the array and move on to the second index iteration.
+ * @return {*}: Will return any datatype that is the value of the seed(total) after all values are passed through the function.
  * 
  */
  
