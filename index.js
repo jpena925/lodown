@@ -189,7 +189,7 @@ module.exports.unique = unique;
  * @param {Function} func : the function that will take the value, index and array and determine a true or false return for each
  * 
  * @return {Array}: returns a new array of values from the original that passed through the function and evaluated as true
- * @edgecase: If function produces a result of false or anything other than true, it will not be added to the new array.
+ * If function produces a result of false or anything other than true, it will not be added to the new array.
  */
  
 function filter(array, func){
@@ -361,7 +361,7 @@ module.exports.some = some;
  * 
  * @param {Array} array: The collection of values that will go through the function to build on the seed
  * @param {Function} func: The function that will take in the seed(total), element, and index and return a changed seed(total).
- * @param {Number} seed: The number that the function will use as a starting number in its parameter and will be built on each iteration
+ * @param {*} seed: The value of any datatype that the function will use as a starting number in its parameter and will be built on each iteration
  * 
  * @return {*}: Will return any datatype that is the value of the seed(total) after all values are passed through the function.
  * 
